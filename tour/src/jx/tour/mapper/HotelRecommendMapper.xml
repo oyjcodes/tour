@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="jx.tour.mapper.HotelRecommendMapper">
+	<select id="getOtherHotels" resultType="jx.tour.pojo.Hotel">
+
+		select * from hotel where
+		hotel.hnum=#{0} and hotel.hid not in (#{1}) ORDER BY RAND() LIMIT 4
+	</select>
+	<select id="getSomeHotels" resultType="jx.tour.pojo.Hotel">
+
+		select * from hotel ORDER BY RAND() LIMIT 3
+	</select>
+		<select id="getALLHotels" resultType="jx.tour.pojo.HotelWithBLOBs">
+		  select * from hotel where stage=1 
+	</select>
+</mapper>

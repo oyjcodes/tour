@@ -1,0 +1,235 @@
+.banner {
+	margin-top:315px;
+	width: 100%;
+	height: 100%;
+	background: #94c646 url(../images/y1202.png);
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.car {
+	width: 14.1875rem;
+	height: 12.125rem;
+	background: url(../images/car.png) no-repeat;
+	position: absolute;
+	position: absolute;
+	top: 400px;
+	bottom: 0;
+	left: 0;
+	margin: auto;
+	animation:carAn 15s linear infinite;
+	animation-delay:2s;
+}
+
+
+@media (min-width: 1024px) {}
+
+
+/*>=1024鐨勮澶�*/
+
+@media (min-width: 1100px) {}
+
+
+/*>=1100鐨勮澶�*/
+
+@media (min-width: 1280px) {
+
+}
+
+
+/*>=1280鐨勮澶�*/
+
+@media (min-width: 1366px) {
+ top:160px;
+}
+
+@media (min-width: 1440px) {
+	 top:160px;
+}
+
+@media (min-width: 1680px) {
+	.car {
+		top: 160px;
+	}
+}
+
+@media (min-width: 1920px) {
+	.car {
+		top: 160px;
+	}
+}
+
+@keyframes carAn{
+	from{
+		left: 0;
+	}
+	to{
+		left: 100%;
+	}
+}
+
+.logo {
+	margin-left: 80px;
+}
+
+#dh {
+	height: 100%;
+	width: 100%;
+}
+#g-header {  
+	height: 20%;
+	width: 100%;
+}
+
+.g-mid {
+	height: 50%;
+	width: 100%;
+	position: relative;
+	display: flex;
+}
+
+#svg {
+	position: absolute;
+	top: -225px;
+	left: 0;
+	transform: rotate(-4deg);
+}
+
+.g-footer {
+	text-align: center;
+	height: 20%;
+	width: 100%;
+}
+
+.btn {
+	color: #fff;
+	border-radius: 10px;
+	display: inline-block;
+	height: 80px;
+	width: 240px;
+	line-height: 80px;
+	outline: none;
+	border: none;
+	font-size: 24px;
+	margin-right: 25px;
+	margin-left: 25px;
+	cursor: pointer;
+}
+
+.btn:active {
+	opacity: .8;
+}
+
+.btn-blue {
+	background: #00b7fb;
+}
+
+.btn-green {
+	background: #338f3c;
+}
+
+.btn-yellow {
+	background: #cf812d;
+}
+
+.icon {
+	display: inline-block;
+	width: 48px;
+	height: 48px;
+}
+
+.iphone {
+	background: url(../images/icon-iphone.png) no-repeat;
+	vertical-align: middle;
+	margin-top: -10px;
+}
+
+.cloud1 {
+	width: 313px;
+	height: 208px;
+	background: url(../images/cloud1.png) no-repeat;
+	position: absolute;
+	right: 0;
+	top: 0px;
+	animation: cloud1An 80s linear infinite;
+	opacity: .8;
+}
+
+.cloud2 {
+	width: 351px;
+	height: 208px;
+	background: url(../images/cloud2.png) no-repeat;
+	position: absolute;
+	right: 100px;
+	top: 40px;
+	animation: cloud2An 60s linear infinite;
+	opacity: .8;
+}
+
+@keyframes cloud1An {
+	from {
+		right: 0;
+	}
+	to {
+		right: 100%;
+	}
+}
+
+@keyframes cloud2An {
+	from {
+		right: 620px;
+	}
+	to {
+		right: 100%;
+	}
+}
+
+.an {
+	background: url(../images/icon-an.png) no-repeat;
+	vertical-align: middle;
+	margin-top: -10px;
+}
+
+.yy {
+	background: url(../images/icon-yy.png) no-repeat;
+	vertical-align: middle;
+	margin-top: -10px;
+}
+
+.copyright {
+	color: #fff;
+	margin-top: 50px;
+	font-size: 12px;
+	padding: 0 0 50px 0;
+}
+
+.copyright p {
+	line-height: 200%;
+	text-align: center;
+	font-weight: 500;
+}
+
+.entry_btn {
+	width: 120px;
+	height: 45px;
+	text-align: center;
+	line-height: 45px;
+	border-radius: 5px;
+	background: #f60;
+    border:none;
+    text-decoration: none;
+	font-size: 16px;
+	float: right;
+	color: #fff;
+	margin-top: 50px;
+	margin-right: 50px;
+	display: inline-block;
+	opacity: .9;
+	outline: none;
+	cursor: pointer;
+	box-shadow: 0 0 10px rgba(0,0,0,.1);
+}
+.entry_btn:hover{
+	opacity: 1;
+	cursor: pointer;
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="jx.tour.mapper.UserVoMapper" >
+
+  <update id="updateBaseInformation" parameterType="jx.tour.pojo.UserWithBLOBs">
+      update user set userName=#{username},address=#{address},signature=#{signature} where userId= #{userid}; 
+  </update>
+    <update id="updatePassword" parameterType="jx.tour.pojo.PasswordVo">
+      update user set password=#{password3} where userId= #{userid}; 
+  </update>
+
+	<update id="updateUserImage" parameterType="jx.tour.pojo.User">
+	   update user set  userImag=#{userimag} where userId= #{userid};  
+	</update>
+	
+	
+	<update id="downUser" parameterType="int">
+	   update user set stage= 0 where userId= #{value};  
+	</update>
+	
+	
+	<update id="upUser" parameterType="int">
+	   update user set stage= 1 where userId= #{value};  
+	</update>
+	
+	
+  
+</mapper>

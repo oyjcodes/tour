@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="jx.tour.mapper.MinformationMapper">
+
+	<select id="getAllInformations" resultType="jx.tour.pojo.Information">
+		select  * from  Information
+	</select>
+
+	<update id="downInformation" parameterType="int">
+		update Information set stage = 0 where id=#{value};
+	</update>
+	
+	<update id="upInformation" parameterType="int">
+		update Information set stage = 1 where id=#{value};       
+	</update>
+</mapper>  

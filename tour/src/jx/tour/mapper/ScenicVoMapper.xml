@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="jx.tour.mapper.ScenicVoMapper">
+
+
+	<select id="getAllScenic" resultType="jx.tour.pojo.ScenicVo">
+		select scenic.*,areaName FROM scenic,area where scenic.scenicnum =
+		area.areanum
+	</select>
+
+	<update id="downScenic" parameterType="int">
+		update scenic set stage = 0 where scenicId=#{value};
+	</update>
+	<update id="upScenic" parameterType="int">
+		update scenic set stage = 1 where scenicId=#{value};
+	</update>
+	<select id="selectScenics" parameterType="Integer[]" resultType="jx.tour.pojo.ScenicVo">
+		select scenic.*,areaName FROM scenic,area where scenic.scenicnum =
+		area.areanum and scenicid
+		 <foreach  collection="array" item="id" open="in (" close=")" separator=",">   
+             #{id}  
+        </foreach>  
+	</select>
+
+</mapper>  

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="jx.tour.mapper.HCommentMapper">
+	<select id="getHotelCommment" parameterType="int" resultType="jx.tour.pojo.HComment">
+		  select userimag,username,content,ptime from user,hotelcomment where `user`.userId = hotelcomment.usernum and hotelcomment.hid = #{value} and hotelcomment.stage=1 order by ptime desc
+	</select>
+	
+	<!-- 后台 -->
+	<select id="getAllHotelCommnet" resultType="jx.tour.pojo.HComment">
+		  select username,hname,pic,hotelcomment.* from user,hotel,hotelcomment
+          where `user`.userId = hotelcomment.usernum and hotelcomment.hid = hotel.hid
+	</select>
+	
+	<select id="rejectHotelComment" parameterType="int">
+		   update hotelcomment set stage=0 where id = #{value}
+	</select>
+	
+	<select id="passHotelComment" parameterType="int">
+		   update hotelcomment set stage=1 where id = #{value}  
+	</select>
+	
+</mapper>

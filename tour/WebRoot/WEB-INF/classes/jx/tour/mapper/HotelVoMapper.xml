@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="jx.tour.mapper.HotelVoMapper">
+
+	<select id="getAllHotel" resultType="jx.tour.pojo.HotelVo">
+		select hotel.*,areaName FROM hotel,area where hotel.hnum =
+		area.areanum
+	</select>
+
+	<update id="downHotel" parameterType="int">
+		update hotel set stage = 0 where hid=#{value};
+	</update>
+	
+	<update id="upHotel" parameterType="int">
+		update hotel set stage = 1 where hid=#{value};          
+	</update>
+	
+</mapper>  

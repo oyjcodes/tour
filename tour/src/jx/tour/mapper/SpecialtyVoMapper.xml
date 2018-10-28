@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="jx.tour.mapper.SpecialtyVoMapper">
+
+	<select id="getAllSpecialty" resultType="jx.tour.pojo.SpecialtyVo">
+		select specialty.*,areaName FROM specialty,area where specialty.tnum =
+		area.areanum
+	</select>
+	
+	<update id="downSpecialty" parameterType="int">
+		update specialty set stage = 0 where id=#{value};
+	</update>
+	<update id="upSpecialty" parameterType="int">
+		update specialty set stage = 1 where id=#{value};
+	</update>
+	
+</mapper>  

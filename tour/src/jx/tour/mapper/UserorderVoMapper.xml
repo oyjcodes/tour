@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="jx.tour.mapper.UserorderVoMapper" >
+
+  <update id="updateNum" parameterType="jx.tour.pojo.UserorderVo">
+      update specialty set stocknum = #{allnum} where id = #{pid};
+  </update>
+  <select id="findAllOrders" parameterType="jx.tour.pojo.UserorderVo" resultType="jx.tour.pojo.UserorderVo">
+     select userorder.*,tpic from userorder,specialty where userorder.pid = specialty.id
+     and userId = #{userid} ORDER BY time desc; 
+  </select>
+  <select id="getAllorderVo"  resultType="jx.tour.pojo.OrderVo">
+    select username,tpic,pic2,pic3,userorder.* from user,userorder,specialty 
+    where userorder.pid = specialty.id and userorder.userid = `user`.userId
+  </select>
+ 
+</mapper>

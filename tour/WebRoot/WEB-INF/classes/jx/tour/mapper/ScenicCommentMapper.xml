@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="jx.tour.mapper.ScenicCommentMapper" >
+  <select id="getScenicComment" parameterType="int" resultType="jx.tour.pojo.ScenicComment">
+      select userimag,username,content,ptime from user,sccomment where `user`.userId = sccomment.userNum and sccomment.secenyNum = #{value} and sccomment.stage=1 order by ptime desc
+  </select>
+    <select id="getScenic" resultType="jx.tour.pojo.Scenic">
+       select * from scenic ORDER BY RAND() LIMIT 3  
+  </select>
+  <select id="getSomeScenic" resultType="jx.tour.pojo.Scenic">
+       select * from scenic where stage = 1
+  </select>
+  <select id="getScenicByName" parameterType="jx.tour.pojo.Search" resultType="jx.tour.pojo.Scenic">
+      select * from scenic where name like '%${keyboard}%' and stage = 1    
+  </select>
+  
+<!--   后台 -->
+  <select id="getAllScenicComment" resultType="jx.tour.pojo.ScenicComment">
+       select userimag,username,name,sccomment.* from user,sccomment,scenic where `user`.userId = sccomment.userNum and sccomment.secenyNum = scenic.scenicId order by ptime desc
+  </select>
+  
+  <select id="passScenicComment"  parameterType="int">
+       update sccomment set stage = 1 where cid = #{value};
+  </select>
+  
+  <select id="rejectScenicComment"  parameterType="int">
+       update sccomment set stage = 0 where cid = #{value};
+  </select>
+  
+  
+</mapper>
