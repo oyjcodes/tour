@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="jx.tour.mapper.ScenicMapper" >
+  <resultMap id="BaseResultMap" type="jx.tour.pojo.Scenic" >
+    <id column="scenicId" property="scenicid" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="scenicNum" property="scenicnum" jdbcType="INTEGER" />
+    <result column="scenicAddress" property="scenicaddress" jdbcType="VARCHAR" />
+    <result column="pic1" property="pic1" jdbcType="VARCHAR" />
+    <result column="title1" property="title1" jdbcType="VARCHAR" />
+    <result column="pic2" property="pic2" jdbcType="VARCHAR" />
+    <result column="pic3" property="pic3" jdbcType="VARCHAR" />
+    <result column="cost" property="cost" jdbcType="DOUBLE" />
+    <result column="time" property="time" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="category" property="category" jdbcType="INTEGER" />
+    <result column="stage" property="stage" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="jx.tour.pojo.ScenicWithBLOBs" extends="BaseResultMap" >
+    <result column="video" property="video" jdbcType="LONGVARCHAR" />
+    <result column="describle" property="describle" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    scenicId, name, scenicNum, scenicAddress, pic1, title1, pic2, pic3, cost, time, tel, 
+    category, stage
+  </sql>
+  <sql id="Blob_Column_List" >
+    video, describle
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="jx.tour.pojo.ScenicExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from scenic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="jx.tour.pojo.ScenicExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from scenic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from scenic
+    where scenicId = #{scenicid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from scenic
+    where scenicId = #{scenicid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="jx.tour.pojo.ScenicExample" >
+    delete from scenic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="jx.tour.pojo.ScenicWithBLOBs" >
+    insert into scenic (scenicId, name, scenicNum, 
+      scenicAddress, pic1, title1, 
+      pic2, pic3, cost, time, 
+      tel, category, stage, 
+      video, describle)
+    values (#{scenicid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{scenicnum,jdbcType=INTEGER}, 
+      #{scenicaddress,jdbcType=VARCHAR}, #{pic1,jdbcType=VARCHAR}, #{title1,jdbcType=VARCHAR}, 
+      #{pic2,jdbcType=VARCHAR}, #{pic3,jdbcType=VARCHAR}, #{cost,jdbcType=DOUBLE}, #{time,jdbcType=VARCHAR}, 
+      #{tel,jdbcType=VARCHAR}, #{category,jdbcType=INTEGER}, #{stage,jdbcType=INTEGER}, 
+      #{video,jdbcType=LONGVARCHAR}, #{describle,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="jx.tour.pojo.ScenicWithBLOBs" >
+    insert into scenic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="scenicid != null" >
+        scenicId,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="scenicnum != null" >
+        scenicNum,
+      </if>
+      <if test="scenicaddress != null" >
+        scenicAddress,
+      </if>
+      <if test="pic1 != null" >
+        pic1,
+      </if>
+      <if test="title1 != null" >
+        title1,
+      </if>
+      <if test="pic2 != null" >
+        pic2,
+      </if>
+      <if test="pic3 != null" >
+        pic3,
+      </if>
+      <if test="cost != null" >
+        cost,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="category != null" >
+        category,
+      </if>
+      <if test="stage != null" >
+        stage,
+      </if>
+      <if test="video != null" >
+        video,
+      </if>
+      <if test="describle != null" >
+        describle,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="scenicid != null" >
+        #{scenicid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicnum != null" >
+        #{scenicnum,jdbcType=INTEGER},
+      </if>
+      <if test="scenicaddress != null" >
+        #{scenicaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="pic1 != null" >
+        #{pic1,jdbcType=VARCHAR},
+      </if>
+      <if test="title1 != null" >
+        #{title1,jdbcType=VARCHAR},
+      </if>
+      <if test="pic2 != null" >
+        #{pic2,jdbcType=VARCHAR},
+      </if>
+      <if test="pic3 != null" >
+        #{pic3,jdbcType=VARCHAR},
+      </if>
+      <if test="cost != null" >
+        #{cost,jdbcType=DOUBLE},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="stage != null" >
+        #{stage,jdbcType=INTEGER},
+      </if>
+      <if test="video != null" >
+        #{video,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="describle != null" >
+        #{describle,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="jx.tour.pojo.ScenicExample" resultType="java.lang.Integer" >
+    select count(*) from scenic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update scenic
+    <set >
+      <if test="record.scenicid != null" >
+        scenicId = #{record.scenicid,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scenicnum != null" >
+        scenicNum = #{record.scenicnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.scenicaddress != null" >
+        scenicAddress = #{record.scenicaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pic1 != null" >
+        pic1 = #{record.pic1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title1 != null" >
+        title1 = #{record.title1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pic2 != null" >
+        pic2 = #{record.pic2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pic3 != null" >
+        pic3 = #{record.pic3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cost != null" >
+        cost = #{record.cost,jdbcType=DOUBLE},
+      </if>
+      <if test="record.time != null" >
+        time = #{record.time,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tel != null" >
+        tel = #{record.tel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.category != null" >
+        category = #{record.category,jdbcType=INTEGER},
+      </if>
+      <if test="record.stage != null" >
+        stage = #{record.stage,jdbcType=INTEGER},
+      </if>
+      <if test="record.video != null" >
+        video = #{record.video,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.describle != null" >
+        describle = #{record.describle,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update scenic
+    set scenicId = #{record.scenicid,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      scenicNum = #{record.scenicnum,jdbcType=INTEGER},
+      scenicAddress = #{record.scenicaddress,jdbcType=VARCHAR},
+      pic1 = #{record.pic1,jdbcType=VARCHAR},
+      title1 = #{record.title1,jdbcType=VARCHAR},
+      pic2 = #{record.pic2,jdbcType=VARCHAR},
+      pic3 = #{record.pic3,jdbcType=VARCHAR},
+      cost = #{record.cost,jdbcType=DOUBLE},
+      time = #{record.time,jdbcType=VARCHAR},
+      tel = #{record.tel,jdbcType=VARCHAR},
+      category = #{record.category,jdbcType=INTEGER},
+      stage = #{record.stage,jdbcType=INTEGER},
+      video = #{record.video,jdbcType=LONGVARCHAR},
+      describle = #{record.describle,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update scenic
+    set scenicId = #{record.scenicid,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      scenicNum = #{record.scenicnum,jdbcType=INTEGER},
+      scenicAddress = #{record.scenicaddress,jdbcType=VARCHAR},
+      pic1 = #{record.pic1,jdbcType=VARCHAR},
+      title1 = #{record.title1,jdbcType=VARCHAR},
+      pic2 = #{record.pic2,jdbcType=VARCHAR},
+      pic3 = #{record.pic3,jdbcType=VARCHAR},
+      cost = #{record.cost,jdbcType=DOUBLE},
+      time = #{record.time,jdbcType=VARCHAR},
+      tel = #{record.tel,jdbcType=VARCHAR},
+      category = #{record.category,jdbcType=INTEGER},
+      stage = #{record.stage,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="jx.tour.pojo.ScenicWithBLOBs" >
+    update scenic
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="scenicnum != null" >
+        scenicNum = #{scenicnum,jdbcType=INTEGER},
+      </if>
+      <if test="scenicaddress != null" >
+        scenicAddress = #{scenicaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="pic1 != null" >
+        pic1 = #{pic1,jdbcType=VARCHAR},
+      </if>
+      <if test="title1 != null" >
+        title1 = #{title1,jdbcType=VARCHAR},
+      </if>
+      <if test="pic2 != null" >
+        pic2 = #{pic2,jdbcType=VARCHAR},
+      </if>
+      <if test="pic3 != null" >
+        pic3 = #{pic3,jdbcType=VARCHAR},
+      </if>
+      <if test="cost != null" >
+        cost = #{cost,jdbcType=DOUBLE},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        category = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="stage != null" >
+        stage = #{stage,jdbcType=INTEGER},
+      </if>
+      <if test="video != null" >
+        video = #{video,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="describle != null" >
+        describle = #{describle,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where scenicId = #{scenicid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="jx.tour.pojo.ScenicWithBLOBs" >
+    update scenic
+    set name = #{name,jdbcType=VARCHAR},
+      scenicNum = #{scenicnum,jdbcType=INTEGER},
+      scenicAddress = #{scenicaddress,jdbcType=VARCHAR},
+      pic1 = #{pic1,jdbcType=VARCHAR},
+      title1 = #{title1,jdbcType=VARCHAR},
+      pic2 = #{pic2,jdbcType=VARCHAR},
+      pic3 = #{pic3,jdbcType=VARCHAR},
+      cost = #{cost,jdbcType=DOUBLE},
+      time = #{time,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      category = #{category,jdbcType=INTEGER},
+      stage = #{stage,jdbcType=INTEGER},
+      video = #{video,jdbcType=LONGVARCHAR},
+      describle = #{describle,jdbcType=LONGVARCHAR}
+    where scenicId = #{scenicid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="jx.tour.pojo.Scenic" >
+    update scenic
+    set name = #{name,jdbcType=VARCHAR},
+      scenicNum = #{scenicnum,jdbcType=INTEGER},
+      scenicAddress = #{scenicaddress,jdbcType=VARCHAR},
+      pic1 = #{pic1,jdbcType=VARCHAR},
+      title1 = #{title1,jdbcType=VARCHAR},
+      pic2 = #{pic2,jdbcType=VARCHAR},
+      pic3 = #{pic3,jdbcType=VARCHAR},
+      cost = #{cost,jdbcType=DOUBLE},
+      time = #{time,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      category = #{category,jdbcType=INTEGER},
+      stage = #{stage,jdbcType=INTEGER}
+    where scenicId = #{scenicid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="jx.tour.mapper.ContentVoMapper">
+	<!-- 后台 -->
+	<select id="getPublishContent" parameterType="int"  resultType="jx.tour.pojo.ContentVo">
+		select content.*,areaName FROM content,area where content.areanum =
+		area.areanum and categoryid = #{value}
+	</select>
+	
+	<update id="downPublishContent">
+		update content set stage = 0 where cid = #{value};
+	</update>
+	
+	<update id="upPublishContent">
+		update content set stage = 1 where cid = #{value};
+	</update>
+	
+	<select id="getContentScenic"  resultType="jx.tour.pojo.Content">
+		select * from content where stage = 1 and categoryid=0 order by created desc limit 0,10
+	</select>
+		<select id="getContentSpecialty"  resultType="jx.tour.pojo.Content">
+		select * from content where stage = 1 and categoryid=1 order by created desc limit 0,5
+	</select>
+	
+ 
+</mapper>  

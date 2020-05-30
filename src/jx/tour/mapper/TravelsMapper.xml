@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="jx.tour.mapper.TravelsMapper" >
+  <resultMap id="BaseResultMap" type="jx.tour.pojo.Travels" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userNum" property="usernum" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="ptime" property="ptime" jdbcType="TIMESTAMP" />
+    <result column="pic1" property="pic1" jdbcType="VARCHAR" />
+    <result column="pic2" property="pic2" jdbcType="VARCHAR" />
+    <result column="pic3" property="pic3" jdbcType="VARCHAR" />
+    <result column="readnum" property="readnum" jdbcType="INTEGER" />
+    <result column="stage" property="stage" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="jx.tour.pojo.TravelsWithBLOBs" extends="BaseResultMap" >
+    <result column="describle1" property="describle1" jdbcType="LONGVARCHAR" />
+    <result column="describle2" property="describle2" jdbcType="LONGVARCHAR" />
+    <result column="describle3" property="describle3" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, userNum, title, ptime, pic1, pic2, pic3, readnum, stage
+  </sql>
+  <sql id="Blob_Column_List" >
+    describle1, describle2, describle3
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="jx.tour.pojo.TravelsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from travels
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="jx.tour.pojo.TravelsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from travels
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from travels
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from travels
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="jx.tour.pojo.TravelsExample" >
+    delete from travels
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="jx.tour.pojo.TravelsWithBLOBs" >
+    insert into travels (id, userNum, title, 
+      ptime, pic1, pic2, 
+      pic3, readnum, stage, 
+      describle1, describle2, describle3
+      )
+    values (#{id,jdbcType=INTEGER}, #{usernum,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+      #{ptime,jdbcType=TIMESTAMP}, #{pic1,jdbcType=VARCHAR}, #{pic2,jdbcType=VARCHAR}, 
+      #{pic3,jdbcType=VARCHAR}, #{readnum,jdbcType=INTEGER}, #{stage,jdbcType=INTEGER}, 
+      #{describle1,jdbcType=LONGVARCHAR}, #{describle2,jdbcType=LONGVARCHAR}, #{describle3,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="jx.tour.pojo.TravelsWithBLOBs" >
+    insert into travels
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="usernum != null" >
+        userNum,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="ptime != null" >
+        ptime,
+      </if>
+      <if test="pic1 != null" >
+        pic1,
+      </if>
+      <if test="pic2 != null" >
+        pic2,
+      </if>
+      <if test="pic3 != null" >
+        pic3,
+      </if>
+      <if test="readnum != null" >
+        readnum,
+      </if>
+      <if test="stage != null" >
+        stage,
+      </if>
+      <if test="describle1 != null" >
+        describle1,
+      </if>
+      <if test="describle2 != null" >
+        describle2,
+      </if>
+      <if test="describle3 != null" >
+        describle3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="usernum != null" >
+        #{usernum,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="ptime != null" >
+        #{ptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pic1 != null" >
+        #{pic1,jdbcType=VARCHAR},
+      </if>
+      <if test="pic2 != null" >
+        #{pic2,jdbcType=VARCHAR},
+      </if>
+      <if test="pic3 != null" >
+        #{pic3,jdbcType=VARCHAR},
+      </if>
+      <if test="readnum != null" >
+        #{readnum,jdbcType=INTEGER},
+      </if>
+      <if test="stage != null" >
+        #{stage,jdbcType=INTEGER},
+      </if>
+      <if test="describle1 != null" >
+        #{describle1,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="describle2 != null" >
+        #{describle2,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="describle3 != null" >
+        #{describle3,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="jx.tour.pojo.TravelsExample" resultType="java.lang.Integer" >
+    select count(*) from travels
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update travels
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.usernum != null" >
+        userNum = #{record.usernum,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ptime != null" >
+        ptime = #{record.ptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pic1 != null" >
+        pic1 = #{record.pic1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pic2 != null" >
+        pic2 = #{record.pic2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pic3 != null" >
+        pic3 = #{record.pic3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.readnum != null" >
+        readnum = #{record.readnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.stage != null" >
+        stage = #{record.stage,jdbcType=INTEGER},
+      </if>
+      <if test="record.describle1 != null" >
+        describle1 = #{record.describle1,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.describle2 != null" >
+        describle2 = #{record.describle2,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.describle3 != null" >
+        describle3 = #{record.describle3,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update travels
+    set id = #{record.id,jdbcType=INTEGER},
+      userNum = #{record.usernum,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      ptime = #{record.ptime,jdbcType=TIMESTAMP},
+      pic1 = #{record.pic1,jdbcType=VARCHAR},
+      pic2 = #{record.pic2,jdbcType=VARCHAR},
+      pic3 = #{record.pic3,jdbcType=VARCHAR},
+      readnum = #{record.readnum,jdbcType=INTEGER},
+      stage = #{record.stage,jdbcType=INTEGER},
+      describle1 = #{record.describle1,jdbcType=LONGVARCHAR},
+      describle2 = #{record.describle2,jdbcType=LONGVARCHAR},
+      describle3 = #{record.describle3,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update travels
+    set id = #{record.id,jdbcType=INTEGER},
+      userNum = #{record.usernum,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      ptime = #{record.ptime,jdbcType=TIMESTAMP},
+      pic1 = #{record.pic1,jdbcType=VARCHAR},
+      pic2 = #{record.pic2,jdbcType=VARCHAR},
+      pic3 = #{record.pic3,jdbcType=VARCHAR},
+      readnum = #{record.readnum,jdbcType=INTEGER},
+      stage = #{record.stage,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="jx.tour.pojo.TravelsWithBLOBs" >
+    update travels
+    <set >
+      <if test="usernum != null" >
+        userNum = #{usernum,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="ptime != null" >
+        ptime = #{ptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pic1 != null" >
+        pic1 = #{pic1,jdbcType=VARCHAR},
+      </if>
+      <if test="pic2 != null" >
+        pic2 = #{pic2,jdbcType=VARCHAR},
+      </if>
+      <if test="pic3 != null" >
+        pic3 = #{pic3,jdbcType=VARCHAR},
+      </if>
+      <if test="readnum != null" >
+        readnum = #{readnum,jdbcType=INTEGER},
+      </if>
+      <if test="stage != null" >
+        stage = #{stage,jdbcType=INTEGER},
+      </if>
+      <if test="describle1 != null" >
+        describle1 = #{describle1,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="describle2 != null" >
+        describle2 = #{describle2,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="describle3 != null" >
+        describle3 = #{describle3,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="jx.tour.pojo.TravelsWithBLOBs" >
+    update travels
+    set userNum = #{usernum,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      ptime = #{ptime,jdbcType=TIMESTAMP},
+      pic1 = #{pic1,jdbcType=VARCHAR},
+      pic2 = #{pic2,jdbcType=VARCHAR},
+      pic3 = #{pic3,jdbcType=VARCHAR},
+      readnum = #{readnum,jdbcType=INTEGER},
+      stage = #{stage,jdbcType=INTEGER},
+      describle1 = #{describle1,jdbcType=LONGVARCHAR},
+      describle2 = #{describle2,jdbcType=LONGVARCHAR},
+      describle3 = #{describle3,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="jx.tour.pojo.Travels" >
+    update travels
+    set userNum = #{usernum,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      ptime = #{ptime,jdbcType=TIMESTAMP},
+      pic1 = #{pic1,jdbcType=VARCHAR},
+      pic2 = #{pic2,jdbcType=VARCHAR},
+      pic3 = #{pic3,jdbcType=VARCHAR},
+      readnum = #{readnum,jdbcType=INTEGER},
+      stage = #{stage,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

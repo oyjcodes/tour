@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="jx.tour.mapper.ManagerMapper" >
+  <resultMap id="BaseResultMap" type="jx.tour.pojo.Manager" >
+    <id column="usernum" property="usernum" jdbcType="INTEGER" />
+    <result column="password" property="password" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    usernum, password, username, tel
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="jx.tour.pojo.ManagerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from manager
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from manager
+    where usernum = #{usernum,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from manager
+    where usernum = #{usernum,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="jx.tour.pojo.ManagerExample" >
+    delete from manager
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="jx.tour.pojo.Manager" >
+    insert into manager (usernum, password, username, 
+      tel)
+    values (#{usernum,jdbcType=INTEGER}, #{password,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, 
+      #{tel,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="jx.tour.pojo.Manager" >
+    insert into manager
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="usernum != null" >
+        usernum,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="usernum != null" >
+        #{usernum,jdbcType=INTEGER},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="jx.tour.pojo.ManagerExample" resultType="java.lang.Integer" >
+    select count(*) from manager
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update manager
+    <set >
+      <if test="record.usernum != null" >
+        usernum = #{record.usernum,jdbcType=INTEGER},
+      </if>
+      <if test="record.password != null" >
+        password = #{record.password,jdbcType=INTEGER},
+      </if>
+      <if test="record.username != null" >
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tel != null" >
+        tel = #{record.tel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update manager
+    set usernum = #{record.usernum,jdbcType=INTEGER},
+      password = #{record.password,jdbcType=INTEGER},
+      username = #{record.username,jdbcType=VARCHAR},
+      tel = #{record.tel,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="jx.tour.pojo.Manager" >
+    update manager
+    <set >
+      <if test="password != null" >
+        password = #{password,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where usernum = #{usernum,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="jx.tour.pojo.Manager" >
+    update manager
+    set password = #{password,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR}
+    where usernum = #{usernum,jdbcType=INTEGER}
+  </update>
+</mapper>

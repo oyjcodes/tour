@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="jx.tour.mapper.HotelMapper" >
+  <resultMap id="BaseResultMap" type="jx.tour.pojo.Hotel" >
+    <id column="hid" property="hid" jdbcType="INTEGER" />
+    <result column="hNum" property="hnum" jdbcType="INTEGER" />
+    <result column="hName" property="hname" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="pic" property="pic" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="stage" property="stage" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="jx.tour.pojo.HotelWithBLOBs" extends="BaseResultMap" >
+    <result column="hAddress" property="haddress" jdbcType="LONGVARCHAR" />
+    <result column="describle" property="describle" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    hid, hNum, hName, tel, pic, price, stage
+  </sql>
+  <sql id="Blob_Column_List" >
+    hAddress, describle
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="jx.tour.pojo.HotelExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from hotel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="jx.tour.pojo.HotelExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hotel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from hotel
+    where hid = #{hid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from hotel
+    where hid = #{hid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="jx.tour.pojo.HotelExample" >
+    delete from hotel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="jx.tour.pojo.HotelWithBLOBs" >
+    insert into hotel (hid, hNum, hName, 
+      tel, pic, price, stage, 
+      hAddress, describle)
+    values (#{hid,jdbcType=INTEGER}, #{hnum,jdbcType=INTEGER}, #{hname,jdbcType=VARCHAR}, 
+      #{tel,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, #{stage,jdbcType=INTEGER}, 
+      #{haddress,jdbcType=LONGVARCHAR}, #{describle,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="jx.tour.pojo.HotelWithBLOBs" >
+    insert into hotel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="hid != null" >
+        hid,
+      </if>
+      <if test="hnum != null" >
+        hNum,
+      </if>
+      <if test="hname != null" >
+        hName,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="pic != null" >
+        pic,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="stage != null" >
+        stage,
+      </if>
+      <if test="haddress != null" >
+        hAddress,
+      </if>
+      <if test="describle != null" >
+        describle,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="hid != null" >
+        #{hid,jdbcType=INTEGER},
+      </if>
+      <if test="hnum != null" >
+        #{hnum,jdbcType=INTEGER},
+      </if>
+      <if test="hname != null" >
+        #{hname,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null" >
+        #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="stage != null" >
+        #{stage,jdbcType=INTEGER},
+      </if>
+      <if test="haddress != null" >
+        #{haddress,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="describle != null" >
+        #{describle,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="jx.tour.pojo.HotelExample" resultType="java.lang.Integer" >
+    select count(*) from hotel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update hotel
+    <set >
+      <if test="record.hid != null" >
+        hid = #{record.hid,jdbcType=INTEGER},
+      </if>
+      <if test="record.hnum != null" >
+        hNum = #{record.hnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.hname != null" >
+        hName = #{record.hname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tel != null" >
+        tel = #{record.tel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pic != null" >
+        pic = #{record.pic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DOUBLE},
+      </if>
+      <if test="record.stage != null" >
+        stage = #{record.stage,jdbcType=INTEGER},
+      </if>
+      <if test="record.haddress != null" >
+        hAddress = #{record.haddress,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.describle != null" >
+        describle = #{record.describle,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update hotel
+    set hid = #{record.hid,jdbcType=INTEGER},
+      hNum = #{record.hnum,jdbcType=INTEGER},
+      hName = #{record.hname,jdbcType=VARCHAR},
+      tel = #{record.tel,jdbcType=VARCHAR},
+      pic = #{record.pic,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DOUBLE},
+      stage = #{record.stage,jdbcType=INTEGER},
+      hAddress = #{record.haddress,jdbcType=LONGVARCHAR},
+      describle = #{record.describle,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update hotel
+    set hid = #{record.hid,jdbcType=INTEGER},
+      hNum = #{record.hnum,jdbcType=INTEGER},
+      hName = #{record.hname,jdbcType=VARCHAR},
+      tel = #{record.tel,jdbcType=VARCHAR},
+      pic = #{record.pic,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DOUBLE},
+      stage = #{record.stage,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="jx.tour.pojo.HotelWithBLOBs" >
+    update hotel
+    <set >
+      <if test="hnum != null" >
+        hNum = #{hnum,jdbcType=INTEGER},
+      </if>
+      <if test="hname != null" >
+        hName = #{hname,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null" >
+        pic = #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="stage != null" >
+        stage = #{stage,jdbcType=INTEGER},
+      </if>
+      <if test="haddress != null" >
+        hAddress = #{haddress,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="describle != null" >
+        describle = #{describle,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where hid = #{hid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="jx.tour.pojo.HotelWithBLOBs" >
+    update hotel
+    set hNum = #{hnum,jdbcType=INTEGER},
+      hName = #{hname,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      pic = #{pic,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE},
+      stage = #{stage,jdbcType=INTEGER},
+      hAddress = #{haddress,jdbcType=LONGVARCHAR},
+      describle = #{describle,jdbcType=LONGVARCHAR}
+    where hid = #{hid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="jx.tour.pojo.Hotel" >
+    update hotel
+    set hNum = #{hnum,jdbcType=INTEGER},
+      hName = #{hname,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      pic = #{pic,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE},
+      stage = #{stage,jdbcType=INTEGER}
+    where hid = #{hid,jdbcType=INTEGER}
+  </update>
+</mapper>

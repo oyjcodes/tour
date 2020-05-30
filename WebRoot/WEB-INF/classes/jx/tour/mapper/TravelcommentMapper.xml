@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="jx.tour.mapper.TravelcommentMapper" >
+  <resultMap id="BaseResultMap" type="jx.tour.pojo.Travelcomment" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="usernum" property="usernum" jdbcType="INTEGER" />
+    <result column="travelNum" property="travelnum" jdbcType="INTEGER" />
+    <result column="ptime" property="ptime" jdbcType="TIMESTAMP" />
+    <result column="stage" property="stage" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="jx.tour.pojo.Travelcomment" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, usernum, travelNum, ptime, stage
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="jx.tour.pojo.TravelcommentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from travelcomment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="jx.tour.pojo.TravelcommentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from travelcomment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from travelcomment
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from travelcomment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="jx.tour.pojo.TravelcommentExample" >
+    delete from travelcomment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="jx.tour.pojo.Travelcomment" >
+    insert into travelcomment (id, usernum, travelNum, 
+      ptime, stage, content
+      )
+    values (#{id,jdbcType=INTEGER}, #{usernum,jdbcType=INTEGER}, #{travelnum,jdbcType=INTEGER}, 
+      #{ptime,jdbcType=TIMESTAMP}, #{stage,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="jx.tour.pojo.Travelcomment" >
+    insert into travelcomment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="usernum != null" >
+        usernum,
+      </if>
+      <if test="travelnum != null" >
+        travelNum,
+      </if>
+      <if test="ptime != null" >
+        ptime,
+      </if>
+      <if test="stage != null" >
+        stage,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="usernum != null" >
+        #{usernum,jdbcType=INTEGER},
+      </if>
+      <if test="travelnum != null" >
+        #{travelnum,jdbcType=INTEGER},
+      </if>
+      <if test="ptime != null" >
+        #{ptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stage != null" >
+        #{stage,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="jx.tour.pojo.TravelcommentExample" resultType="java.lang.Integer" >
+    select count(*) from travelcomment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update travelcomment
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.usernum != null" >
+        usernum = #{record.usernum,jdbcType=INTEGER},
+      </if>
+      <if test="record.travelnum != null" >
+        travelNum = #{record.travelnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.ptime != null" >
+        ptime = #{record.ptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.stage != null" >
+        stage = #{record.stage,jdbcType=INTEGER},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update travelcomment
+    set id = #{record.id,jdbcType=INTEGER},
+      usernum = #{record.usernum,jdbcType=INTEGER},
+      travelNum = #{record.travelnum,jdbcType=INTEGER},
+      ptime = #{record.ptime,jdbcType=TIMESTAMP},
+      stage = #{record.stage,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update travelcomment
+    set id = #{record.id,jdbcType=INTEGER},
+      usernum = #{record.usernum,jdbcType=INTEGER},
+      travelNum = #{record.travelnum,jdbcType=INTEGER},
+      ptime = #{record.ptime,jdbcType=TIMESTAMP},
+      stage = #{record.stage,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="jx.tour.pojo.Travelcomment" >
+    update travelcomment
+    <set >
+      <if test="usernum != null" >
+        usernum = #{usernum,jdbcType=INTEGER},
+      </if>
+      <if test="travelnum != null" >
+        travelNum = #{travelnum,jdbcType=INTEGER},
+      </if>
+      <if test="ptime != null" >
+        ptime = #{ptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stage != null" >
+        stage = #{stage,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="jx.tour.pojo.Travelcomment" >
+    update travelcomment
+    set usernum = #{usernum,jdbcType=INTEGER},
+      travelNum = #{travelnum,jdbcType=INTEGER},
+      ptime = #{ptime,jdbcType=TIMESTAMP},
+      stage = #{stage,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="jx.tour.pojo.Travelcomment" >
+    update travelcomment
+    set usernum = #{usernum,jdbcType=INTEGER},
+      travelNum = #{travelnum,jdbcType=INTEGER},
+      ptime = #{ptime,jdbcType=TIMESTAMP},
+      stage = #{stage,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

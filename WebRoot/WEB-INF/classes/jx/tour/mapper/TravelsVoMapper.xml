@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="jx.tour.mapper.TravelsVoMapper" >
+  <select id="findGoodTravels" resultType="jx.tour.pojo.TravelsVo">
+       select id,username,userimag,signature,pic1,title,readnum from user,travels where `user`.userId = travels.userNum and travels.stage=1 order by readnum desc limit 0,4
+  </select>
+   <select id="findInformationList" parameterType="int" resultType="jx.tour.pojo.Information">
+      select id,title,pic,ptime from information where stage=1 order by ptime desc limit 0,#{value}
+  </select>
+   <select id="findTravelArticle" parameterType="int" resultType="jx.tour.pojo.TravelsVo"> 
+       select id,username,userimag,signature,pic1,describle1,pic2,describle2,pic3,describle3,title,readnum,ptime from user,travels where userId = userNum and id=#{value}
+  </select>
+     <select id="findTravelComment" parameterType="int" resultType="jx.tour.pojo.HComment">
+       select userimag,username,content,ptime from user,travelcomment where `user`.userId = travelcomment.usernum and travelcomment.travelNum = #{value} order by travelcomment.ptime desc;
+  </select>
+    <select id="findOtherTravels" parameterType="int" resultType="jx.tour.pojo.TravelsVo">
+      select id,username,userimag,signature,pic1,title,readnum from user,travels where `user`.userId = travels.userNum and id not in(#{value}) order by readnum desc limit 0,4;
+  </select>
+      <select id="findOtherInformation" parameterType="int" resultType="jx.tour.pojo.Information">
+       select * from information where id not in(#{value}) order by ptime  limit 0,5;
+  </select>
+    <select id="findALLTravels" resultType="jx.tour.pojo.TravelsVo">
+      select id,username,userimag,signature,pic1,title,readnum from user,travels where `user`.userId = travels.userNum and travels.stage=1 order by ptime desc
+  </select>
+      <select id="findTravelsByName" resultType="jx.tour.pojo.TravelsVo">
+        select id,username,userimag,signature,pic1,title,readnum from user,travels where `user`.userId = travels.userNum and title like '%${keyboard}%' and travels.stage =1 order by ptime desc 
+  </select>
+      <select id="findInformationByTitle" resultType="jx.tour.pojo.Information">
+        select * from information where title like '%${keyboard}%' and stage =1
+  </select>
+  
+  <select id="addGood" parameterType="jx.tour.pojo.GiveGood">
+        update travels set travels.readnum = #{goodnum} where travels.id = #{tnum};
+  </select>
+  
+    <select id="findUserAllTravels" parameterType="int" resultType="jx.tour.pojo.TravelsVo">
+         select id,username,userimag,signature,pic1,title,readnum,describle1 from user,travels where `user`.userId = travels.userNum and userid = #{value};
+  </select>
+  
+  <select id="updateTravel" parameterType="jx.tour.pojo.TravelsVo">
+      update travels set title=#{title},ptime = #{ptime},pic1=#{pic1},describle1 = #{describle1},pic2=#{pic2},describle2 = #{describle2},pic3=#{pic3},describle3 = #{describle3} where id=#{id};
+  </select>
+  
+  <select id="pass" parameterType="int">
+      update travels set stage=1 where id=#{value};
+  </select>
+   <select id="noPass" parameterType="int">
+      update travels set stage=0 where id=#{value};
+  </select>
+  <update id="passSome" parameterType="Integer[]">
+		update travels set stage = 1 where id
+		 <foreach  collection="array" item="id" open="in (" close=")" separator=",">   
+             #{id}  
+        </foreach>  
+  </update>
+  <select id="getPassTravels" parameterType="Integer[]" resultType="jx.tour.pojo.Travels">
+      select * from travels where id  
+        <foreach  collection="array" item="id" open="in (" close=")" separator=",">   
+             #{id}  
+        </foreach>  
+  </select>
+  
+ <select id="getAllTravelsComment" resultType="jx.tour.pojo.TravelCommentVo">
+   select username,title,pic1,travelcomment.* from user,travels,travelcomment 
+   where `user`.userId = travelcomment.usernum and travelcomment.travelNum = travels.id
+ </select>
+ 
+  <select id="passTravelsComment" parameterType="int">
+     update travelcomment set stage = 1 where id = #{value}
+ </select>
+ 
+ 
+ <select id="rejectTravelsCommment" parameterType="int">
+     update travelcomment set stage = 0 where id = #{value}
+ </select>
+
+</mapper>

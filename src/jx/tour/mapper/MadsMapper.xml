@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="jx.tour.mapper.MadsMapper">
+
+	<select id="getAllAds" resultType="jx.tour.pojo.Ads">
+		select  * from  ads 
+	</select>
+
+	<update id="downAds" parameterType="int">
+		update ads set stage = 0 where id=#{value};
+	</update>
+	
+	<update id="upAds" parameterType="int">
+		update ads set stage = 1 where id=#{value};       
+	</update>
+	
+	<select id="getAdsList" resultType="jx.tour.pojo.Ads">
+		select * from ads  where stage=1 order by ptime desc limit 0,7;  
+	</select>
+	
+</mapper>  

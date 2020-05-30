@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="jx.tour.mapper.SpecialtyCommentMapper" >
+  <select id="getSpecialtyComment" parameterType="int" resultType="jx.tour.pojo.ScenicComment">
+      select userimag,username,content,ptime from user,spcomment where `user`.userId = spcomment.userNum and spcomment.tnum = #{value} and spcomment.stage=1  order by ptime desc
+  </select>
+    <select id="getSpecialty" parameterType="int" resultType="jx.tour.pojo.Specialty">
+       select * from specialty ORDER BY RAND() LIMIT 3
+    </select>
+      <select id="getOtherSpecialty" resultType="jx.tour.pojo.Specialty">
+       select * from specialty where specialty.tNum=#{0} and specialty.id not in (#{1}) ORDER BY RAND() LIMIT 6
+    </select>
+    <select id="getSpecialtyByName" parameterType="jx.tour.pojo.Search" resultType="jx.tour.pojo.Specialty">
+       select * from specialty where tname like '%${keyboard}%' and stage =1
+    </select> 
+    
+   <!--  后台 -->
+    <select id="getAllSpecialtyComment"  resultType="jx.tour.pojo.SpecialtycommentVo">
+       select username,tname,spcomment.* from user,spcomment,specialty where `user`.userId = spcomment.userNum and spcomment.tNum = specialty.id
+    </select> 
+    
+    <update id="passSpecialtyComment" parameterType="int">
+        update spcomment set stage=1 where id=#{value};
+    </update>
+    
+    <update id="rejectSpecialtyComment" parameterType="int">
+        update spcomment set stage=0 where id=#{value};
+    </update>
+</mapper>
