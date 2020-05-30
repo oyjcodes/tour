@@ -267,9 +267,11 @@ End (算法结束)
 
 为了对订单数据进行可视化的展示，这里使用了一款百度的Echarts插件。通过Ajax请求后台getOrderController方法，得到不同地区对应的下单数量以及订单总额，将其转化为json格式的字符串后返回到前台，通过Echarts插件显示出来。订单统计模块组件及工作过程如图所示：
 
-![avatar](img/30.jpg)
-
 ![avatar](img/28.jpg)
+
+![avatar](img/29.jpg)
+
+![avatar](img/30.jpg)
 
 ### 4.9 游记管理模块
 
